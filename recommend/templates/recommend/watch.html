@@ -1,0 +1,34 @@
+{% extends 'recommend/base.html' %}
+{% block body %}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">My Watchlist</h2>
+    <hr>
+    
+    <!-- Movie list -->
+    <div class="row">
+        {% if movies %}
+            {% for movie in movies %}
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100 shadow">
+                        <a href="{% url 'detail' movie.id %}">
+                            <img src="{{ movie.movie_logo.url }}" class="card-img-top img-fluid rounded-top" alt="{{ movie.title }}">
+                        </a>
+                        <div class="card-body text-center">
+                            <h5 class="card-title mb-2">{{ movie.title }}</h5>
+                            <p class="card-text text-muted">{{ movie.genre }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <div class="alert alert-danger text-center">
+                    <strong>Sorry!</strong> No movies in your list.
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

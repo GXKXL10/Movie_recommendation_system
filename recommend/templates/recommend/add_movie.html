@@ -1,0 +1,35 @@
+<!-- add_movie.html -->
+{% extends 'recommend/base.html' %}
+
+{% block title %}Add a Movie{% endblock %}
+
+{% block body %}
+<div class="d-flex align-items-center justify-content-center min-vh-100">
+    <div class="container" style="max-width: 400px;">
+        <h2 class="d-flex align-items-center justify-content-center min-vh-100">Add a New Movie</h2>
+        
+        <form method="POST" enctype="multipart/form-data" class="shadow p-4 rounded bg-light">
+            {% csrf_token %}
+            
+            <div class="form-group mb-3">
+                <label for="movie_name" class="form-label">Movie Name:</label>
+                <input type="text" name="movie_name" class="form-control form-control-sm" id="movie_name" placeholder="Enter movie name" required>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label for="movie_genre" class="form-label">Genre:</label>
+                <input type="text" name="movie_genre" class="form-control form-control-sm" id="movie_genre" placeholder="Enter genre" required>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label for="movie_poster" class="form-label">Poster:</label>
+                <input type="file" name="movie_poster" class="form-control form-control-sm" id="movie_poster" required>
+            </div>
+            
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-sm">Add Movie</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

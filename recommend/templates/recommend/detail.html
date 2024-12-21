@@ -1,0 +1,84 @@
+{% extends 'recommend/base.html' %}
+
+{% block title %}
+    {{ movie.title }}
+{% endblock %}
+
+{% block body %}
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <div class="alert alert-success">
+                <strong>Success!</strong> {{ message }}
+            </div>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Movie Poster -->
+        <div class="col-md-4 text-center mb-4">
+            <a href="#">
+                <img src="{{ movie.movie_logo.url }}" class="img-fluid rounded" alt="{{ movie.title }}">
+            </a>
+        </div>
+
+        <!-- Movie Details -->
+        <div class="col-mt-5">
+            <h1 class="text-white">{{ movie.title }}</h1>
+            <h4 class="text-muted">Genre: {{ movie.genre }}</h4>
+
+            <div class="mt-4">
+                <!-- Rating Form -->
+                <form method="post" action="{% url 'detail' movie.id %}" name="ratingForm" class="mb-4">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="rating" class="text-white">Rate Movie:</label>
+                        <div class="mt-5">
+                            <div class="star-rating">
+                                <span class="fa fa-star-o" data-rating="1"></span>
+                                <span class="fa fa-star-o" data-rating="2"></span>
+                                <span class="fa fa-star-o" data-rating="3"></span>
+                                <span class="fa fa-star-o" data-rating="4"></span>
+                                <span class="fa fa-star-o" data-rating="5"></span>
+                                {% if rate_flag %}
+                                    <input type="hidden" name="rating" class="rating-value" value="{{ movie_rating }}">
+                                {% else %}
+                                    <input type="hidden" name="rating" class="rating-value" value="0">
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Rating</button>
+                    
+                </form>
+                <br>
+                <!-- Add to My List Form -->
+                <form method="post" action="{% url 'detail' movie.id %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="watchlist" class="text-white">My List:</label>
+                        <div class="form-check">
+                            {% if update %}
+                                <input type="checkbox" name="watch" class="form-check-input" checked>
+                                <label class="form-check-label text-muted">In My List</label>
+                            {% else %}
+                                <input type="checkbox" name="watch" class="form-check-input">
+                                <label class="form-check-label text-muted">Add to My List</label>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-prim">
+                        {% if update %}
+                            Remove
+                        {% else %}
+                            Add
+                        {% endif %}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
